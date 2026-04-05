@@ -155,7 +155,7 @@ infoLabel.Size = UDim2.new(1, 0, 0.5, 0)
 infoLabel.TextScaled = true
 infoLabel.BackgroundTransparency = 1
 infoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-infoLabel.Text = "Info: " .. key  -- <- original info
+infoLabel.Text = "Info: " .. local PlayerData  -- <- original info
 infoLabel.Parent = frame
 
 -- Copy button
